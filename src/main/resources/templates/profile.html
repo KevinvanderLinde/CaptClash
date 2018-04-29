@@ -1,0 +1,14 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+	<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+		<title>Capitalism Clash</title>
+	</head>
+
+	<body>
+		<h1>Profile <td th:text="${user.username}">Text ...</td></h1>
+		<br>
+		Role:
+		<td th:text="${user.role.name}">Text ...</td>
+	</body>
+</html>
