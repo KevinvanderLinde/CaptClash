@@ -21,6 +21,9 @@ public class LoginController {
 
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String loginForm(Model model, HttpServletRequest request) {
+		if (request.getHeader("error") != null) {
+			model.addAttribute("error", request.getHeader("error"));
+		}
 		return "login";
 	}
 

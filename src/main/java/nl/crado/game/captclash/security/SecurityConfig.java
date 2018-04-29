@@ -48,7 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin()
 				.loginPage("/login")
 				.permitAll()
-				.failureHandler((request, response, exception) -> response.sendRedirect("/login")) /*TODO add a message to notify the login failed*/
+				.failureHandler((request, response, exception) -> {
+					response.sendRedirect("/login");
+					request.setAttribute("error", "Unable to log in!");
+					response.setHeader("error", "k1s");
+					response.addHeader("error", "kaas");
+				}) /*TODO add a message to notify the login failed*/
 				.successHandler((request, response, authentification) -> response.sendRedirect("/index"))
 				.and()
 			.logout()
