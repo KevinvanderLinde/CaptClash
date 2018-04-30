@@ -1,4 +1,4 @@
-package nl.crado.game.captclash.game;
+package nl.crado.game.captclash.game.sector;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

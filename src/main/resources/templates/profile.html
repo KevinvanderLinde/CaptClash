@@ -1,14 +1,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-	<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-		<title>Capitalism Clash</title>
-	</head>
+<head>
+	<div th:insert="~{template :: head}"></div>
+</head>
 
 	<body>
-		<h1>Profile <td th:text="${user.username}">Text ...</td></h1>
-		<br>
-		Role:
-		<td th:text="${user.role.name}">Text ...</td>
+		<div th:insert="~{template :: body}"></div>
+		<div th:if="${user}">
+			Name: <td th:text="${user.username}">
+			<br>
+			Role: <td th:text="${user.role.name}">
+		</div>
 	</body>
 </html>

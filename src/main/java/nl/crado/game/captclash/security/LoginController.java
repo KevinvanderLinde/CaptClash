@@ -1,6 +1,8 @@
 package nl.crado.game.captclash.security;
 
 import java.security.Principal;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +29,6 @@ public class LoginController {
 		return "login";
 	}
 
-
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public final String root(Model model, HttpServletRequest request) {
 		return "redirect:/index";
@@ -36,13 +37,22 @@ public class LoginController {
 
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public final String index(Model model, Principal principal) {
+		addUserToModel(model, principal);
+		Set<String> index = new HashSet<>();
+		index.add("profile");
+		model.addAttribute("index", index);
+		model.addAttribute("page_text", "This is the index!");
 		return "index";
 	}
 
 	@RequestMapping(path = "/profile", method = RequestMethod.GET)
 	public final String profile(Model model, Principal principal) {
-		User user = userService.findByUsername(principal.getName());
-		model.addAttribute("user", user);
+		addUserToModel(model, principal);
+		model.addAttribute("page_text", "This is your profile page!");
 		return "profile";
+	}
+
+	private void addUserToModel(Model model, Principal principal) {
+		model.addAttribute("user", userService.findByUsername(principal.getName()));
 	}
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:fragment="head">
+        <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+        <title>Capitalism Clash</title>
+    </div>
+</head>
+
+<body>
+    <div th:fragment="body">
+        <div id="container">
+            <div id="header">
+                <h1>Capt Clash</h1>
+            </div>
+            <div id="wrapper">
+                <div id="content">
+                    <p><strong>Content</strong></p>
+                    <div th:if="${page_text}">
+                        <td th:text="${page_text}"></td>
+                    </div>
+                </div>
+            </div>
+
+            <div id="navigation">
+            <p><strong>Navigation</strong></p>
+                <div th:if="${page_text}">
+                    <tr th:each="course : ${index}" th:object="${index}">
+                        <li><a href="/${index}">${index}</a></li>
+                    </tr>
+                </div>
+                <ul>
+                    <li><a href="/profile">Profile</a></li>
+                    <li><a href="/index">Index</a></li>
+                    <br><br><br><br>
+                </ul>
+            </div>
+        </div>
+
+        <div id="footer">
+            <p>Footer</p>
+        </div>
+    </div>
+</body>
+
+</html>

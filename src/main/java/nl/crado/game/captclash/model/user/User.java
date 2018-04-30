@@ -1,18 +1,8 @@
 package nl.crado.game.captclash.model.user;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Getter;
 import lombok.Setter;
-import nl.crado.game.captclash.game.Sector;
+import nl.crado.game.captclash.game.sector.Sector;
 
 @Entity
 public class User implements UserDetails {
@@ -42,7 +32,7 @@ public class User implements UserDetails {
 	@Column(nullable = false)
 	@Getter @Setter
 	private boolean enabled;
-	
+
 	@OneToOne
 	@JoinColumn(name = "role_id")
 	@Getter @Setter
@@ -51,7 +41,7 @@ public class User implements UserDetails {
 	@OneToMany
 	@JoinColumn(name = "sector_id")
 	@Getter @Setter
-	private Set<Sector> sectors;
+	private Set<Sector> sectors = new HashSet<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -74,5 +64,6 @@ public class User implements UserDetails {
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
+
 
 }
