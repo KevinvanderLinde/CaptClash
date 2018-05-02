@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import nl.crado.game.captclash.model.test.UserService;
+import nl.crado.game.captclash.model.userservice.UserService;
 
 @Configuration
 @EnableWebSecurity

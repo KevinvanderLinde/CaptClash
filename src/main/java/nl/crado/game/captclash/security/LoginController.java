@@ -12,8 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import nl.crado.game.captclash.model.test.UserService;
-import nl.crado.game.captclash.model.user.User;
+import nl.crado.game.captclash.model.userservice.UserService;
 
 @Controller
 public class LoginController {
@@ -40,7 +39,7 @@ public class LoginController {
 		addUserToModel(model, principal);
 		Set<String> index = new HashSet<>();
 		index.add("profile");
-		model.addAttribute("index", index);
+		model.addAttribute("indexs", index);
 		model.addAttribute("page_text", "This is the index!");
 		return "index";
 	}

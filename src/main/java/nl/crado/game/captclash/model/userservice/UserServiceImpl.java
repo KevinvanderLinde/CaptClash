@@ -1,4 +1,4 @@
-package nl.crado.game.captclash.model.test;
+package nl.crado.game.captclash.model.userservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
