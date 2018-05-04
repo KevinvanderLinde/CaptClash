@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+import lombok.experimental.Accessors;
 import nl.crado.game.captclash.game.user.Gameuser;
 import nl.crado.game.captclash.security.role.Role;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +25,7 @@ public class User implements UserDetails, Gameuser {
 	private Long id;
 	
 	@Column(unique = true, nullable = false)
-	@Size(min=8, max = 24)
+	@Size(min=4, max = 24)
 	@Getter @Setter
 	private String username;
 	
@@ -36,29 +37,41 @@ public class User implements UserDetails, Gameuser {
 	@Getter @Setter
 	private boolean enabled;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = false)
 	@Getter @Setter
 	private boolean accountNonExpired;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = false)
 	@Getter @Setter
 	private boolean accountNonLocked;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = false)
 	@Getter @Setter
 	private boolean credentialsNonExpired;
 
-	@OneToOne
-	@JoinColumn(name = "role_id")
+	@ManyToOne
+	@JoinColumn(name = "role_id", unique = false)
 	@Getter @Setter
 	private Role role;
 
 
 	//Game related fields
 	@OneToMany
-	@JoinColumn(name = "sector_id")
+	@JoinColumn(name = "user_id")
 	@Getter @Setter
 	private Set<Sector> sectors = new HashSet<>();
+
+	@OneToOne
+	@JoinColumn(name = "current_sector_id")
+	private Sector currentSector;
+
+	public User() {
+		Sector testSector = Sector.generateNewDefaultSector();
+
+		sectors.add(testSector);
+		currentSector = testSector;
+		getCurrentSector();
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -67,4 +80,29 @@ public class User implements UserDetails, Gameuser {
 		return authorities;
 	}
 
+	public boolean isUser() {
+		return role.getName().equalsIgnoreCase("ROLE_USER") || role.getName().equalsIgnoreCase("ROLE_ADMIN");
+	}
+
+	public boolean isAdmin() {
+		return role.getName().equalsIgnoreCase("ROLE_ADMIN");
+	}
+
+	//TODO all implementations of the Gameuser.
+	@Override
+	public int getPoints() {
+		return 0;
+	}
+
+	public Sector setCurrentSector(Sector currentSector) {
+		if (currentSector != null) {
+			this.currentSector = currentSector;
+		}
+		return this.currentSector;
+	}
+
+	public Sector getCurrentSector() {
+		//TODO handle optional - if called an error 500 will return. (Means that currentSector is still empty after the get.)
+		return (currentSector != null ? currentSector : sectors.stream().findFirst().get());
+	}
 }

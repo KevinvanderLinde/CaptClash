@@ -3,10 +3,7 @@ package nl.crado.game.captclash.security.role;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Role {
@@ -16,8 +13,15 @@ public class Role {
 	@Getter @Setter
 	private Long id;
 
+	@Column(unique = true)
 	@Getter @Setter
 	private String name;
 
+	public Role() {
 
+	}
+
+	public Role(String name) {
+	this.name = name;
+	}
 }

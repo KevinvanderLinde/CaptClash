@@ -7,5 +7,6 @@ import nl.crado.game.captclash.model.user.User;
 public interface UserService extends UserDetailsService {
 
 	User findByUsername(String username);
-	
+
+	void saveUser(User user);
 }

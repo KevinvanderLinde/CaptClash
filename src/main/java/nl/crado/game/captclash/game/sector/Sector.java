@@ -1,19 +1,39 @@
 package nl.crado.game.captclash.game.sector;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.crado.game.captclash.game.building.Building;
+import nl.crado.game.captclash.game.building.BuildingType;
+import nl.crado.game.captclash.game.user.Gameuser;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints= @UniqueConstraint(columnNames = {"loc_x", "loc_z"}) )
 public class Sector {
+
+
+	public static Sector generateNewDefaultSector() {
+		Sector sector = new Sector();
+		sector.setSectorName("New sector");
+
+		//TODO get location logic.
+		Random random = new Random();
+		sector.setLocationX(random.nextInt());
+		sector.setLocationZ(random.nextInt());
+
+		//TODO add default buildings with values
+		for (BuildingType type : BuildingType.values()) {
+			sector.buildings.add(Building.generateDefaultBuilding(type));
+		}
+		return sector;
+	}
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +51,15 @@ public class Sector {
 	@Column(nullable = false, name = "loc_z")
 	@Getter @Setter
 	private Integer locationZ;
-	
-	//TODO add all the buildings.
-	
-	
+
+
+	@OneToMany
+	@JoinColumn(name = "sector_id")
+	@Getter @Setter
+	private Set<Building> buildings = new HashSet<>();
+
+
+	public Optional<Building> getBuildingByType(BuildingType type) {
+		return buildings.stream().filter(building -> building.getBuildingType() == type).findFirst();
+	}
 }

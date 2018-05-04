@@ -3,6 +3,7 @@ package nl.crado.game.captclash.model.userservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import nl.crado.game.captclash.model.dao.UserDao;
@@ -29,6 +30,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByUsername(String username) {
 		return userDao.findByUsername(username);
+	}
+
+	public void saveUser(User user) {
+		userDao.save(user);
 	}
 
 }

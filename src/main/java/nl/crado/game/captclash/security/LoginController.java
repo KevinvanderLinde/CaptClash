@@ -2,13 +2,23 @@ package nl.crado.game.captclash.security;
 
 import java.security.Principal;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import nl.crado.game.captclash.model.dao.BuildingDao;
+import nl.crado.game.captclash.model.dao.RoleDao;
+import nl.crado.game.captclash.model.dao.SectorDao;
+import nl.crado.game.captclash.model.user.User;
+import nl.crado.game.captclash.security.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,7 +28,19 @@ import nl.crado.game.captclash.model.userservice.UserService;
 public class LoginController {
 
 	@Autowired
+	private BuildingDao buildingDao;
+
+	@Autowired
+	private SectorDao sectorDao;
+
+	@Autowired
+	private RoleDao roleDao;
+
+	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String loginForm(Model model, HttpServletRequest request) {
@@ -37,9 +59,6 @@ public class LoginController {
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public final String index(Model model, Principal principal) {
 		addUserToModel(model, principal);
-		Set<String> index = new HashSet<>();
-		index.add("profile");
-		model.addAttribute("indexs", index);
 		model.addAttribute("page_text", "This is the index!");
 		return "index";
 	}
@@ -48,10 +67,59 @@ public class LoginController {
 	public final String profile(Model model, Principal principal) {
 		addUserToModel(model, principal);
 		model.addAttribute("page_text", "This is your profile page!");
+		model.addAttribute("page_footer", "This is the footer!");
 		return "profile";
 	}
 
 	private void addUserToModel(Model model, Principal principal) {
 		model.addAttribute("user", userService.findByUsername(principal.getName()));
 	}
+
+	@RequestMapping(path = "/register", method = RequestMethod.GET)
+	public String registerPage(Model model, HttpServletRequest request) {
+	return "register";
+	}
+
+	@RequestMapping(path = "/register", method = RequestMethod.POST)
+	public String handleRegister(Model model, @RequestBody MultiValueMap<String,String> formData) {
+
+		//TODO add some logic
+
+		String username = formData.getFirst("username");
+		String password = formData.getFirst("password");
+
+		System.out.println(username + " : " + password);
+
+		Optional<Role> role = roleDao.findById(1L);
+
+		if (role.isPresent()) {
+			User user = userService.findByUsername(username);
+
+			if (user != null) {
+				//TODO error, username already in use.
+			}
+			else {
+				user = new User();
+				user.setUsername(username);
+				user.setPassword(passwordEncoder.encode(password));
+				user.setRole(role.get());
+
+				user.setAccountNonExpired(true);
+				user.setAccountNonLocked(true);
+				user.setCredentialsNonExpired(true);
+				user.setEnabled(true);
+
+				//TODO create and add sector
+				this.saveUser(user);
+			}
+		}
+		return "redirect:/login";
+	}
+
+	private void saveUser(User user) {
+		user.getSectors().forEach(sector -> buildingDao.saveAll(sector.getBuildings()));
+		sectorDao.saveAll(user.getSectors());
+		userService.saveUser(user);
+	}
+
 }

@@ -9,14 +9,15 @@ div#content p{line-height:1.4}
 div#navigation{background: #3af6de;}
 div#navigation ul{margin:15px 0; padding:0; list-style-type:none;}
 div#navigation li{margin-bottom:5px;}
-div#extra{background:#CCC8B3;}
+div#sector{background:#CCC8B3;}
 div#footer{background: #bf080c;}
 div#footer p{margin:0;padding:5px 10px}
 div#container{width:700px;margin:0 auto}
 div#wrapper{float:left;width:100%; background-color: #f69092}
 div#content{margin: 0 150px}
 div#navigation{float:left;width:150px;margin-left:-700px}
-div#extra{float:left;width:150px;margin-left:-150px}
+div#sector{float:left;width:150px;margin-left:-150px}
+div#sector li{list-style:none;margin-bottom:5px; text-align:left;}
 div#footer{clear:left;width:100%}
 
 form {

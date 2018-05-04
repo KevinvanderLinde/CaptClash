@@ -21,31 +21,57 @@
                         <div th:if="${page_text}">
                             <td th:text="${page_text}"></td>
                         </div>
+
+                        <!--TODO add possible object logics to handle every page. Like main building etc. -->
+
                     </div>
                 </div>
 
                 <div id="navigation">
                 <p><strong>Navigation</strong></p>
 
-
-                        <!--`loop through values. (Create custom object with link value and display value) perefably: use masterdetail (see it as an assignment for this week)-->
-                        <tr th:each="course : ${indexs}" th:text="${index}">
-                            <li><td><span th:text="${index}"></span></td></li>
-
-                            <li><a href="/${index}"><td th:text="${index}"></td></a></li>
-                        </tr>
-
-
                     <ul>
-                        <li><a href="/profile">Profile</a></li>
-                        <li><a href="/index">Index</a></li>
-                        <br><br><br><br>
+                        <div th:if="${user.isUser()}">
+                            <li><a href="/index">Index</a></li>
+                            <li><a href="/profile">Profile</a></li>
+                        </div>
+                        <div th:if="${user.isAdmin()}">
+                            <li><a href="/admin-panel">Admin panel</a></li>
+                        </div>
+
+                        <!--loop through values. (Create custom object with link value and display value) perefably: use masterdetail (see it as an assignment for this week)-->
                     </ul>
                 </div>
             </div>
 
+            <div id="sector">
+                <p><strong>Current Sector</strong></p>
+
+                <div th:if="${user.currentSector}">
+                    <li>Name: <td th:text="${user.currentSector.sectorName}"></td></li>
+
+                    <!-- TODO after the name list the recource levels -->
+
+                    <li>
+                        Location: <td th:text="${user.currentSector.locationX}"></td>;<td th:text="${user.currentSector.locationZ}"></td>
+                    </li>
+
+                    <th:block th:each="building : ${user.currentSector.buildings}">
+                        <li><td th:text="${building.toString()}"></td></li>
+                    </th:block>
+
+
+
+                </div>
+
+
+
+            </div>
+
             <div id="footer">
-                <p>Footer</p>
+                <div th:if="${page_footer}">
+                    <td th:text="${page_footer}"></td>
+                </div>
             </div>
 
         </div>

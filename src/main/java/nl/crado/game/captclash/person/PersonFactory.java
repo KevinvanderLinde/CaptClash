@@ -3,7 +3,7 @@ package nl.crado.game.captclash.person;
 import nl.crado.game.captclash.person.impl.DutchPerson;
 import nl.crado.game.captclash.person.impl.GermanPerson;
 
-public class PersonBuilder {
+public class PersonFactory {
 
     public Person getPerson(int type) {
         switch (type) {
