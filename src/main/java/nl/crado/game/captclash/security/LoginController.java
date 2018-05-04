@@ -43,9 +43,10 @@ public class LoginController {
 	private PasswordEncoder passwordEncoder;
 
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
-	public String loginForm(Model model, HttpServletRequest request) {
-		if (request.getHeader("error") != null) {
-			model.addAttribute("error", request.getHeader("error"));
+	public String loginForm(Model model, HttpServletRequest request, HttpServletResponse response) {
+		if (request.getSession().getAttribute("error") != null) {
+			model.addAttribute("error", request.getSession().getAttribute("error"));
+			request.getSession().removeAttribute("error");
 		}
 		return "login";
 	}
@@ -76,7 +77,10 @@ public class LoginController {
 	}
 
 	@RequestMapping(path = "/register", method = RequestMethod.GET)
-	public String registerPage(Model model, HttpServletRequest request) {
+	public String registerPage(Model model, HttpServletRequest request, Principal principal) {
+		if (principal != null) {
+			return "redirect:/index";
+		}
 	return "register";
 	}
 
@@ -96,7 +100,8 @@ public class LoginController {
 			User user = userService.findByUsername(username);
 
 			if (user != null) {
-				//TODO error, username already in use.
+				model.addAttribute("error", "Username already in use!");
+				return "register";
 			}
 			else {
 				user = new User();

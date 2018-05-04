@@ -4,7 +4,6 @@
 		<div th:insert="~{template :: head}"></div>
 	</head>
 
-	<body>
 
 	<body>
 	<form name="f" th:action="@{/register}" method="post">
@@ -22,7 +21,9 @@
 			</div>
 		</fieldset>
 	</form>
+		<div th:if="${error}">
+			<td th:text="${error}"></td>
+		</div>
 	</body>
 
-	</body>
 </html>

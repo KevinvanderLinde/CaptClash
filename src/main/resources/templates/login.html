@@ -9,9 +9,6 @@
 		<form name="f" th:action="@{/login}" method="post">               
             <fieldset>
                 <legend>Please Login</legend>
-                <div th:if="${error}">
-                    <td th:text="${error}"></td>
-                </div>
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username"/>        
                 <label for="password">Password</label>
@@ -21,5 +18,10 @@
                 </div>
             </fieldset>
         </form>
+
+        <div th:if="${error}">
+            <td th:text="${error}"></td>
+        </div>
+
 	</body>
 </html>

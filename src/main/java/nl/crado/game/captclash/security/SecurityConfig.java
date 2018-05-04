@@ -54,9 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 				.failureHandler((request, response, exception) -> {
 					response.sendRedirect("/login");
-					request.setAttribute("error", "Unable to log in!");
-					response.setHeader("error", "k1s");
-					response.addHeader("error", "kaas");
+					request.getSession().setAttribute("error", "Unable to login!");
 				}) /*TODO add a message to notify the login failed*/
 				.successHandler((request, response, authentification) -> response.sendRedirect("/index"))
 				.and()
