@@ -1,17 +1,27 @@
 package nl.crado.game.captclash.game.sector;
 
-import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
 import lombok.Setter;
 import nl.crado.game.captclash.game.building.Building;
 import nl.crado.game.captclash.game.building.BuildingType;
-import nl.crado.game.captclash.game.user.Gameuser;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints= @UniqueConstraint(columnNames = {"loc_x", "loc_z"}) )
@@ -37,23 +47,33 @@ public class Sector {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Getter @Setter
 	private Long id;
-	
+
 	@Column(length = 32, unique = false, nullable = false, name = "Sector")
 	@Getter @Setter
 	private String sectorName;
-	
+
 	@Column(nullable = false, name = "loc_x")
 	@Getter @Setter
 	private Integer locationX;
-	
+
 	@Column(nullable = false, name = "loc_z")
 	@Getter @Setter
 	private Integer locationZ;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sector_id")
-	@Getter @Setter
+	@Setter
 	private Set<Building> buildings = new HashSet<>();
+
+	private transient boolean isSorted = false;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "upgrading_building")
+	@Getter @Setter
+	private Building upgradingBuilding;
+
+	@Getter @Setter
+	private Long upgradeFinished;
 
 	//Resources
 	@Getter @Setter
@@ -63,8 +83,14 @@ public class Sector {
 		return buildings.stream().filter(building -> building.getBuildingType() == type).findFirst();
 	}
 
-	public void handleResourceTick() {
+	public synchronized Set<Building> getBuildings() {
+		return buildings.stream().sorted((b1, b2) -> Integer.compare(b1.getBuildingType().getListOrder(), b2.getBuildingType().getListOrder())).collect(Collectors.toSet());
+	}
+
+	public void handleTick() {
 		buildings.stream().filter(building -> building.getBuildingType().getRecourceType().isPresent()).forEach(building -> {
+			//TODO also handle upgrade of a building.
+			System.out.print("amount: " + caffeine);
 			caffeine += 1;
 		});
 	}

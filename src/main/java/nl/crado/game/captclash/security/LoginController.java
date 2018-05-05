@@ -113,8 +113,9 @@ public class LoginController {
 				user.setAccountNonLocked(true);
 				user.setCredentialsNonExpired(true);
 				user.setEnabled(true);
-
-				//TODO create and add sector
+				
+				user.getCurrentSector().setSectorName("Sector of " + username);
+				
 				this.saveUser(user);
 			}
 		}

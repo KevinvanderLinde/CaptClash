@@ -9,26 +9,29 @@ import java.util.TimerTask;
 
 public class GameLogic {
 
-    @Autowired
-    private SectorDao sectorDao;
+	@Autowired
+	private SectorDao sectorDao;
 
-    private Timer resourcesTimer;
+	private Timer resourcesTimer;
 
-    public GameLogic() {
-        resourcesTimer = new Timer();
-        resourcesTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                handleResourceTick();
-            }
-        }, 1000, 1000);
-    }
+	public GameLogic() {
+		resourcesTimer = new Timer();
+		resourcesTimer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				doTick();
+			}
+		}, 1000, 1000);
+	}
 
-   public void handleResourceTick() {
-        Iterable<Sector> sectors = sectorDao.findAll();
-        sectors.forEach(sector -> {
-                sector.handleResourceTick();
-            });
-        sectorDao.saveAll(sectors);
-   }
+
+	/*TODO split ticks to a save tick and a normal tick.*/
+
+	public void doTick() {
+		Iterable<Sector> sectors = sectorDao.findAll();
+		sectors.forEach(sector -> {
+			sector.handleTick();
+		});
+		sectorDao.saveAll(sectors);
+	}
 }

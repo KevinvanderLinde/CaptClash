@@ -9,12 +9,13 @@ import java.util.Optional;
 @AllArgsConstructor
 public enum BuildingType {
 
-    OFFICE(2, "Office", 10, ResourceType.NONE),
-    CAFFE(1, "Cafe",  30, ResourceType.CAFFEINE)
+    OFFICE(1, 2, "Office", 10, ResourceType.NONE),
+    CAFFE(2, 1, "Cafe",  30, ResourceType.CAFFEINE)
 
     ;
 
-
+	@Getter private final int listOrder;
+	
     //TODO add all the default building values
     @Getter private final int defaultLevel;
 

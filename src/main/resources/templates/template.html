@@ -56,8 +56,10 @@
                         Location: <td th:text="${user.currentSector.locationX}"></td>;<td th:text="${user.currentSector.locationZ}"></td>
                     </li>
 
-                    <th:block th:each="building : ${user.currentSector.buildings}">
-                        <li><td th:text="${building.toString()}"></td></li>
+                    <th:block th:each="building : ${user.currentSector.getBuildings()}">
+                        <li>
+							<td th:text="${building.toString()}"></td>
+						</li>
                     </th:block>
 
 

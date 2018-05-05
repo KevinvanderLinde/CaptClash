@@ -61,13 +61,12 @@ public class User implements UserDetails, Gameuser {
 	@Getter @Setter
 	private Set<Sector> sectors = new HashSet<>();
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "current_sector_id")
 	private Sector currentSector;
 
 	public User() {
 		Sector testSector = Sector.generateNewDefaultSector();
-
 		sectors.add(testSector);
 		currentSector = testSector;
 		getCurrentSector();
