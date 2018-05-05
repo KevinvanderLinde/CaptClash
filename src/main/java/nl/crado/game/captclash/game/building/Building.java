@@ -31,7 +31,7 @@ public class Building {
     private BuildingType buildingType;
 
     @Getter @Setter
-    private Integer currentLevel = 0;
+    private Integer currentLevel;
 
 
     @Override
