@@ -2,6 +2,7 @@ package nl.crado.game.captclash.game.building;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.crado.game.captclash.game.sector.Sector;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,9 +34,10 @@ public class Building {
     @Getter @Setter
     private Integer currentLevel;
 
-
     @Override
     public String toString() {
         return buildingType.getName() + ": " + currentLevel;
     }
+
+
 }

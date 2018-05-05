@@ -1,10 +1,9 @@
 package nl.crado.game.captclash;
 
+import nl.crado.game.captclash.game.logic.GameLogic;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class CaptClashApplication {
@@ -13,5 +12,8 @@ public class CaptClashApplication {
 		SpringApplication.run(CaptClashApplication.class, args);
 	}
 	
-	
+	@Bean
+	public GameLogic getGameLogic() {
+		return new GameLogic();
+	}
 }

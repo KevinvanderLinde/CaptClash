@@ -9,4 +9,7 @@ public interface UserService extends UserDetailsService {
 	User findByUsername(String username);
 
 	void saveUser(User user);
+
+	public Iterable<User> getAllUsers();
+
 }

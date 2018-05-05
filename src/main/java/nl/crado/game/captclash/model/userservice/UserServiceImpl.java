@@ -36,4 +36,7 @@ public class UserServiceImpl implements UserService {
 		userDao.save(user);
 	}
 
+	public Iterable<User> getAllUsers() {
+		return userDao.findAll();
+	}
 }

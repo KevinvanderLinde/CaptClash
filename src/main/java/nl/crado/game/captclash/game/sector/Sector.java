@@ -17,7 +17,6 @@ import java.util.Set;
 @Table(uniqueConstraints= @UniqueConstraint(columnNames = {"loc_x", "loc_z"}) )
 public class Sector {
 
-
 	public static Sector generateNewDefaultSector() {
 		Sector sector = new Sector();
 		sector.setSectorName("New sector");
@@ -33,7 +32,6 @@ public class Sector {
 		}
 		return sector;
 	}
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,14 +50,22 @@ public class Sector {
 	@Getter @Setter
 	private Integer locationZ;
 
-
 	@OneToMany
 	@JoinColumn(name = "sector_id")
 	@Getter @Setter
 	private Set<Building> buildings = new HashSet<>();
 
+	//Resources
+	@Getter @Setter
+	private Integer caffeine = 300;
 
 	public Optional<Building> getBuildingByType(BuildingType type) {
 		return buildings.stream().filter(building -> building.getBuildingType() == type).findFirst();
+	}
+
+	public void handleResourceTick() {
+		buildings.stream().filter(building -> building.getBuildingType().getRecourceType().isPresent()).forEach(building -> {
+			caffeine += 1;
+		});
 	}
 }
