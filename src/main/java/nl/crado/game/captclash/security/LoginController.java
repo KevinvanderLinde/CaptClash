@@ -116,7 +116,7 @@ public class LoginController {
 				
 				user.getCurrentSector().setSectorName("Sector of " + username);
 				
-				this.saveUser(user);
+				saveUser(user);
 			}
 		}
 		return "redirect:/login";
@@ -127,5 +127,8 @@ public class LoginController {
 		sectorDao.saveAll(user.getSectors());
 		userService.saveUser(user);
 	}
+
+
+	//Search user (Type ahead) in combi met javascript
 
 }
