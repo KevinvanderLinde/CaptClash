@@ -1,4 +1,4 @@
-var bestPictures = new Bloodhound({
+var users = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: '../data/films/post_1960.json', // something like a cache that gets loaded during init
@@ -9,7 +9,7 @@ var bestPictures = new Bloodhound({
 });
 
 $('#remote .typeahead').typeahead(null, {
-    name: 'best-pictures',
+    name: 'all-users',
     display: 'value',
-    source: bestPictures
+    source: users
 });
