@@ -1,18 +1,11 @@
 package nl.crado.game.captclash.security;
 
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import nl.crado.game.captclash.model.dao.BuildingDao;
-import nl.crado.game.captclash.model.dao.RoleDao;
-import nl.crado.game.captclash.model.dao.SectorDao;
-import nl.crado.game.captclash.model.user.User;
-import nl.crado.game.captclash.security.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,7 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import nl.crado.game.captclash.model.dao.BuildingDao;
+import nl.crado.game.captclash.model.dao.RoleDao;
+import nl.crado.game.captclash.model.dao.SectorDao;
+import nl.crado.game.captclash.model.user.User;
 import nl.crado.game.captclash.model.userservice.UserService;
+import nl.crado.game.captclash.security.role.Role;
 
 @Controller
 public class LoginController {

@@ -1,2 +1,10 @@
 INSERT IGNORE INTO role (name) VALUES ('ROLE_USER');
 INSERT IGNORE INTO role (name) VALUES ('ROLE_ADMIN');
+
+INSERT INTO `captclash`.`user` (`account_non_expired`, `account_non_locked`, `credentials_non_expired`, `enabled`, `password`, `username`) VALUES (b'1', b'1', b'1', b'1', '$2a$10$YOT3nWzh18AN.jKYx/InI.W8G6a3oT/dOAq3c3jP3Bn8ei8mhS7TW', 'Rob');
+INSERT INTO `captclash`.`user` (`account_non_expired`, `account_non_locked`, `credentials_non_expired`, `enabled`, `password`, `username`) VALUES (b'1', b'1', b'1', b'1', '$2a$10$YOT3nWzh18AN.jKYx/InI.W8G6a3oT/dOAq3c3jP3Bn8ei8mhS7TW', 'Bob');
+INSERT INTO `captclash`.`user` (`account_non_expired`, `account_non_locked`, `credentials_non_expired`, `enabled`, `password`, `username`) VALUES (b'1', b'1', b'1', b'1', '$2a$10$YOT3nWzh18AN.jKYx/InI.W8G6a3oT/dOAq3c3jP3Bn8ei8mhS7TW', 'Joep');
+INSERT INTO `captclash`.`user` (`account_non_expired`, `account_non_locked`, `credentials_non_expired`, `enabled`, `password`, `username`) VALUES (b'1', b'1', b'1', b'1', '$2a$10$YOT3nWzh18AN.jKYx/InI.W8G6a3oT/dOAq3c3jP3Bn8ei8mhS7TW', 'Ruben');
+INSERT INTO `captclash`.`user` (`account_non_expired`, `account_non_locked`, `credentials_non_expired`, `enabled`, `password`, `username`) VALUES (b'1', b'1', b'1', b'1', '$2a$10$YOT3nWzh18AN.jKYx/InI.W8G6a3oT/dOAq3c3jP3Bn8ei8mhS7TW', 'Geert');
+INSERT INTO `captclash`.`user` (`account_non_expired`, `account_non_locked`, `credentials_non_expired`, `enabled`, `password`, `username`) VALUES (b'1', b'1', b'1', b'1', '$2a$10$YOT3nWzh18AN.jKYx/InI.W8G6a3oT/dOAq3c3jP3Bn8ei8mhS7TW', 'Marcel');
+INSERT INTO `captclash`.`user` (`account_non_expired`, `account_non_locked`, `credentials_non_expired`, `enabled`, `password`, `username`, `role_id`) VALUES (b'1', b'1', b'1', b'1', '$2a$10$YOT3nWzh18AN.jKYx/InI.W8G6a3oT/dOAq3c3jP3Bn8ei8mhS7TW', 'Kevin', '1');
