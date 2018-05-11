@@ -93,15 +93,17 @@ public class User implements UserDetails, Gameuser {
 		return 0;
 	}
 
-	public Sector setCurrentSector(Sector currentSector) {
+	public void setCurrentSector(Sector currentSector) {
 		if (currentSector != null) {
 			this.currentSector = currentSector;
 		}
-		return this.currentSector;
+		else {
+			throw new IllegalArgumentException("Cuurent sector null is not allowed.");
+		}
 	}
 
 	public Sector getCurrentSector() {
 		//TODO handle optional - if called an error 500 will return. (Means that currentSector is still empty after the get.)
-		return (currentSector != null ? currentSector : sectors.stream().findFirst().get());
+		return currentSector;
 	}
 }

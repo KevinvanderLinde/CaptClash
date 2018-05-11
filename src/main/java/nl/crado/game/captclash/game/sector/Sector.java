@@ -81,7 +81,6 @@ public class Sector {
 	public void handleTick() {
 		buildings.stream().filter(building -> building.getBuildingType().getRecourceType().isPresent()).forEach(building -> {
 			//TODO also handle upgrade of a building.
-			System.out.print("amount: " + caffeine);
 			caffeine += 1;
 		});
 	}
